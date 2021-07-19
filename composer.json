@@ -1,0 +1,23 @@
+{
+    "name": "user/prueba",
+    "description": "Library converter to pdf",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Src\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "jorgediazmontoya",
+            "email": "87205178+jorgediazmontoya@users.noreply.github.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "convertapi/convertapi-php": "dev-master",
+        "ext-curl": "*",
+        "ext-json": "*"
+    }
+}
