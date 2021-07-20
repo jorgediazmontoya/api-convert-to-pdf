@@ -2,7 +2,8 @@
 
 namespace Src\Controllers;
 
-use \ConvertApi\ConvertApi;
+use Ilovepdf\CompressTask;
+use Ilovepdf\Ilovepdf;
 
 /**
  * HomeController
@@ -14,8 +15,11 @@ class HomeController {
      *
      * @return void
      */
+    private $ilovepdf;
+
     public function __construct () {
-        ConvertApi::setApiSecret('eXki3UThS9egBP6T');
+        $this->ilovepdf = new Ilovepdf('project_public_47b70ceef8a4e453c83af06a2676229c_YKgg4caeb4d47c7a09834040c941e889f2e4b','secret_key_b5d70996232d86e38144dd786a60b02f_kH0xo7fd473da073f652e8696ad818617ae44');
+        // ConvertApi::setApiSecret('eXki3UThS9egBP6T');
     }
 
     /**
@@ -34,15 +38,36 @@ class HomeController {
      * Upload files
      * @return void
      */
-    public function upload () {
+     public function upload () {
+
         $target_dir = "uploads/";
         $target_file = $target_dir . basename($_FILES["file_upload"]["name"]);
 
-        $result = ConvertApi::convert('pdf', ['File' => $_FILES["file_upload"]["tmp_name"]]);
+        // print_r($_FILES['file_upload']['name']);
+        // die;
+
+
+        // $result = ConvertApi::convert('pdf', ['File' => $_FILES["file_upload"]["tmp_name"]]);
         # save to file
-        $result->getFile()->save("/uploads"."/".$_FILES["file_upload"]["name"].'.pdf');
+        // $result->getFile()->save("/uploads"."/".$_FILES["file_upload"]["name"].'.pdf');
 
         if (move_uploaded_file($_FILES["file_upload"]["tmp_name"], $target_file)) {
+            // Create a new task
+            // $myTaskCompress = $this->ilovepdf->newTask('compress');
+
+            // $myTaskCompress = new CompressTask('project_public_47b70ceef8a4e453c83af06a2676229c_YKgg4caeb4d47c7a09834040c941e889f2e4b','secret_key_b5d70996232d86e38144dd786a60b02f_kH0xo7fd473da073f652e8696ad818617ae44');
+
+            // $myTaskCompress->addFile(__DIR__.'/../../uploads/'.$_FILES["file_upload"]['name']);
+
+            $myTask = $this->ilovepdf->newTask('officepdf');
+
+            $myTask->addFile(__DIR__.'/../../uploads/'.$_FILES["file_upload"]['name']);
+
+            // Execute the task
+            $myTask->execute();
+
+            $myTask->download();
+
             echo "The file ". htmlspecialchars( basename( $_FILES["file_upload"]["name"])). " has been uploaded.";
         } else {
             echo "Sorry, there was an error uploading your file.";

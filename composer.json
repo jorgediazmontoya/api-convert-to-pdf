@@ -16,8 +16,8 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "convertapi/convertapi-php": "dev-master",
         "ext-curl": "*",
-        "ext-json": "*"
+        "ext-json": "*",
+        "ilovepdf/ilovepdf-php": "dev-master"
     }
 }
