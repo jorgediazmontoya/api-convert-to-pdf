@@ -2,8 +2,8 @@
 
 namespace Src\Controllers;
 
-use Ilovepdf\CompressTask;
-use Ilovepdf\Ilovepdf;
+// use Ilovepdf\CompressTask;
+// use Ilovepdf\Ilovepdf;
 
 /**
  * HomeController
@@ -15,10 +15,10 @@ class HomeController {
      *
      * @return void
      */
-    private $ilovepdf;
+    // private $ilovepdf;
 
     public function __construct () {
-        $this->ilovepdf = new Ilovepdf('project_public_47b70ceef8a4e453c83af06a2676229c_YKgg4caeb4d47c7a09834040c941e889f2e4b','secret_key_b5d70996232d86e38144dd786a60b02f_kH0xo7fd473da073f652e8696ad818617ae44');
+        // $this->ilovepdf = new Ilovepdf('project_public_47b70ceef8a4e453c83af06a2676229c_YKgg4caeb4d47c7a09834040c941e889f2e4b','secret_key_b5d70996232d86e38144dd786a60b02f_kH0xo7fd473da073f652e8696ad818617ae44');
         // ConvertApi::setApiSecret('eXki3UThS9egBP6T');
     }
 
@@ -59,6 +59,7 @@ class HomeController {
 
             // $myTaskCompress->addFile(__DIR__.'/../../uploads/'.$_FILES["file_upload"]['name']);
 
+            /*
             $myTask = $this->ilovepdf->newTask('officepdf');
 
             $myTask->addFile(__DIR__.'/../../uploads/'.$_FILES["file_upload"]['name']);
@@ -67,6 +68,10 @@ class HomeController {
             $myTask->execute();
 
             $myTask->download();
+            */
+            $path = __DIR__.'/../../uploads/'.$_FILES["file_upload"]['name'];
+
+            shell_exec(escapeshellcmd("python word.py -pf {$path}"));
 
             echo "The file ". htmlspecialchars( basename( $_FILES["file_upload"]["name"])). " has been uploaded.";
         } else {
